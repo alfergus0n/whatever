@@ -1,5 +1,5 @@
 {
-  "name": "whatever",
+  "name": "@alfergus0n/whatever",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "url": "https://github.com/alfergus0n/whatever.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/alfergus0n"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
