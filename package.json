@@ -8,7 +8,7 @@
     "url": "https://github.com/alfergus0n/whatever.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/alfergus0n"
+    "registry": "https://npm.pkg.github.com/@alfergus0n"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
