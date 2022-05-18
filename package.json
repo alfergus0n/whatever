@@ -6,13 +6,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alfergus0n/whatever.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "scripts": {
     "publish": "turbo run publish",
     "test": "turbo run test --filter=[origin/main] --dry-run --graph"
