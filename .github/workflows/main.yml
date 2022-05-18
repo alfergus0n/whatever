@@ -5,6 +5,13 @@ on:
   push:
     branches:
       - master
+
+# ensures that only one workflow task per branch/environment will run at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+
 jobs:
   publish-check:
     name: Publish Package
@@ -38,6 +45,6 @@ jobs:
       - name: Publish Packages
         run: |
           git config --global user.name "Automation"
-          npm run test
+          npm run publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
