@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "publish": "turbo run publish --filter=[HEAD^1]",
+    "publish": "turbo run publish-package --filter=[HEAD^1]",
     "test": "turbo run test --filter=[origin/main] --dry-run --graph"
   },
   "keywords": [],
