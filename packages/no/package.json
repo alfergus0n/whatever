@@ -1,6 +1,6 @@
 {
   "name": "@alfergus0n/no",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "repository": {
@@ -12,7 +12,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "publish": "npm publish",
+    "publish-package": "npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": ""
