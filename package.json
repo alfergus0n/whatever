@@ -15,7 +15,7 @@
   },
   "scripts": {
     "publish": "turbo run publish",
-    "test": "turbo run test"
+    "test": "turbo run test --filter=[origin/main]"
   },
   "keywords": [],
   "author": "",
