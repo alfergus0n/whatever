@@ -33,6 +33,7 @@ jobs:
 
       - name: Install dependencies if node_modules cache not found
         if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: ls -la
         run: npm ci
 
       - name: Publish Packages
