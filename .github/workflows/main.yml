@@ -38,6 +38,6 @@ jobs:
       - name: Publish Packages
         run: |
           git config --global user.name "Automation"
-          npm run publish
+          npm run test
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
