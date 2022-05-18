@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "workspaces": [
-    "packages/"
+    "packages/*"
   ],
   "repository": {
     "type": "git",
