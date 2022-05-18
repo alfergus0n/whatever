@@ -3,6 +3,10 @@
   "version": "1.0.1",
   "description": "",
   "main": "index.js",
+  "workspaces": [
+       "packages/*",
+       "apps/*"
+     ],
   "repository": {
     "type": "git",
     "url": "https://github.com/alfergus0n/whatever.git"
@@ -11,9 +15,12 @@
     "registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "turbo run test"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "turbo": "^1.2.9"
+  }
 }

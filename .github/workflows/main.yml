@@ -1,23 +1,43 @@
-name: Node.js Package
-
+# Publish workflow/job on push events to the main branch only
+name: Publish Github Packages 🚀
 on:
+  workflow_dispatch:
   push:
     branches:
-      - master
-      
+      - main
 jobs:
-  publish:
+  publish-check:
+    name: Publish Package
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          node-version: 12
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version-file: '.nvmrc'
           registry-url: https://npm.pkg.github.com/
-          scope: '@alfergus0n'
-      - run: npm install
-      - run: npm publish
+          scope: '@@alfergus0n'
+
+      # cache remains for up to 7 days after last access
+      - name: Building and Caching Packages
+        uses: actions/cache@v3
+        id: cache-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies if node_modules cache not found
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Publish Packages
+        run: |
+          git config --global user.name "Automation"
+          npm run publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          
-          
