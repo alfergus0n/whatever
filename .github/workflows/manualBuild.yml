@@ -25,6 +25,16 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
         #TODO: install/Build/Test/Package steps here
+              # cache remains for up to 7 days after last access
+      - name: Building and Caching Packages
+        uses: actions/cache@v3
+        id: cache-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Dependencies If node_modules Cache Not Found
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Release Packages
         uses: changesets/action@v1
