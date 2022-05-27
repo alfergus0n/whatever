@@ -8,12 +8,17 @@
   ],
   "scripts": {
     "publish": "turbo run publish-package --filter=[HEAD^1]",
-    "test": "turbo run test --filter=[origin/main] --dry-run --graph"
+    "test": "turbo run test --filter=[origin/main] --dry-run --graph",
+    "changeset-add": "changeset add",
+    "changeset-version": "changeset version",
+    "changeset-publish": "changeset publish"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "turbo": "1.2.9"
+    "@changesets/changelog-git": "0.1.11",
+    "@changesets/cli": "2.22.0",
+    "turbo": "1.2.8"
   }
 }

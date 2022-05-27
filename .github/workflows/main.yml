@@ -11,16 +11,16 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-
 jobs:
   publish:
     name: Publish Package
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Branch
         uses: actions/checkout@v3
         with:
+          # fetch all Git history, Changesets generates changelogs with correct commits
           fetch-depth: 0
 
       - name: Setup Node
@@ -37,14 +37,13 @@ jobs:
         with:
           path: node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-
       - name: Install dependencies if node_modules cache not found
         if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Publish Packages
-        run: |
-          git config --global user.name "Automation"
-          npm run publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # - name: Publish Packages
+      #   run: |
+      #     git config --global user.name "Automation"
+      #     npm run publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
