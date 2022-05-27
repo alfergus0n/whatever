@@ -29,7 +29,6 @@ jobs:
       - name: Release Packages
         uses: changesets/action@v1
         with:
-          setupGitUser: "Automation"
           publish: npm run changeset-publish
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
