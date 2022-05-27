@@ -58,7 +58,7 @@ jobs:
           git add -A
           git commit -m "Updating Versioning For Packages"
           git push
-          echo "::set-output name=changes::false"
+          echo ::set-output name=changes::"false"
 
 #git commit -m "Updating Versioning For Packages" 2>&1 >/dev/null || echo "No changes to commit"
 
@@ -99,12 +99,15 @@ jobs:
       #   # You can do something when a publish happens.
       #   run: my-slack-bot send-notification --message "A new version of ${GITHUB_REPOSITORY} was published!"
 #
-      # - name: fals
-      #   if: steps.changesets.outputs.hasChangesets == 'false'
-      #   # You can do something when a publish should happen.
-      #   run: echo "no changesets"
+      - name: checking
+        run: echo ${{needs.version.outputs.changes}}
 
-      # - name: tru
-      #   if: steps.changesets.outputs.hasChangesets == 'true'
-      #   # You can do something when a publish should happen.
-      #   run: echo "has changesets"
+      - name: fals
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        # You can do something when a publish should happen.
+        run: echo "no changesets"
+
+      - name: tru
+        if: steps.changesets.outputs.hasChangesets == 'true'
+        # You can do something when a publish should happen.
+        run: echo "has changesets"

@@ -1,0 +1,38 @@
+name: Manual Trigger Build, Test and Release
+
+on: workflow_dispatch
+
+# ensures that only one workflow task per branch/environment will run at a time
+# avoids race conditions
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@alfergus0n'
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+        #TODO: install/Build/Test/Package steps here
+
+      - name: Release Packages
+        uses: changesets/action@v1
+        with:
+          setupGitUser: "Automation"
+          publish: npm run changeset-publish
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          
+      - name: Push tags
+        run: git push --follow-tags
