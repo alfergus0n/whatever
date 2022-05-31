@@ -1,4 +1,4 @@
-name: Build, Test and Release
+name: Build, Test, and Publish
 
 on:
   push:
@@ -15,12 +15,13 @@ concurrency:
 
 jobs:
   versioning:
+    name: Build, Test, and Publish
     runs-on: ubuntu-latest
     outputs:
       # map step output to job output
       changes: ${{ steps.version.outputs.changes }} 
-    
     steps:
+
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
@@ -54,7 +55,8 @@ jobs:
       - name: Push Changes
         if: steps.version.outputs.changes == 'true'
         run: |
-          git config --global user.name "Automation"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "Updating Versioning For Packages"
           git push
@@ -69,14 +71,12 @@ jobs:
         run: echo ${{needs.version.outputs.changes}}
 
       - name: fals
-        if: steps.changesets.outputs.hasChangesets == 'false'
         # You can do something when a publish should happen.
-        run: echo "no changesets"
+        run: echo ${{needs.versioning.outputs.changes}}
 
       - name: tru
-        if: steps.changesets.outputs.hasChangesets == 'true'
         # You can do something when a publish should happen.
-        run: echo "has changesets"
+        run: echo ${{needs.versioning.outputs.changes}}
 
 #git commit -m "Updating Versioning For Packages" 2>&1 >/dev/null || echo "No changes to commit"
 
@@ -85,7 +85,7 @@ jobs:
     # wait for versioning to complete successfully
     needs: versioning
     # This will only run if changeset files have been pushed
-    if: needs.version.outputs.changes == 'false'
+    if: needs.versioning.outputs.changes == 'false'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -99,12 +99,22 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-        #TODO: install/Build/Test/Package steps here
+      # cache remains for up to 7 days after last access
+      - name: Building and Caching Packages
+        uses: actions/cache@v3
+        id: cache-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Dependencies If node_modules Cache Not Found
+        if: steps.cache-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      # run test here  
 
       - name: Release Packages
         uses: changesets/action@v1
         with:
-          setupGitUser: "Automation"
           publish: npm run changeset-publish
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

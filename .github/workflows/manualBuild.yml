@@ -1,4 +1,4 @@
-name: Manual Trigger Build, Test and Release
+name: Manual Trigger Build, Test, and Publish
 
 on: workflow_dispatch
 
@@ -10,6 +10,7 @@ concurrency:
 
 jobs:
   publish:
+    name: Build and Publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,8 +25,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-        #TODO: install/Build/Test/Package steps here
-              # cache remains for up to 7 days after last access
+      # cache remains for up to 7 days after last access
       - name: Building and Caching Packages
         uses: actions/cache@v3
         id: cache-modules
@@ -35,6 +35,8 @@ jobs:
       - name: Install Dependencies If node_modules Cache Not Found
         if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npm ci
+
+      # todo: run test here  
 
       - name: Release Packages
         uses: changesets/action@v1
