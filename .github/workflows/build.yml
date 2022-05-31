@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # map step output to job output
-      changes: ${{ steps.version.outputs.changes }} 
+      committed: ${{ steps.commit.outputs.committed }} 
     steps:
 
       - name: Checkout Repo
@@ -53,6 +53,7 @@ jobs:
       
       # Push updated package.json and CHANGESET.md files
       - name: Push Changes
+        id: commit
         if: steps.version.outputs.changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
@@ -60,23 +61,20 @@ jobs:
           git add -A
           git commit -m "Updating Versioning For Packages"
           git push
-          echo ::set-output name=changes::"false"
+          echo ::set-output name=committed::"true"
 
 
   whatever:
     runs-on: ubuntu-latest
     needs: versioning
     steps:
-      - name: checking
-        run: echo ${{needs.version.outputs.changes}}
-
       - name: fals
         # You can do something when a publish should happen.
-        run: echo ${{needs.versioning.outputs.changes}}
+        run: echo ${{needs.versioning.outputs.commit}}
 
       - name: tru
         # You can do something when a publish should happen.
-        run: echo ${{needs.versioning.outputs.changes}}
+        run: echo ${{needs.versioning.outputs.commit}}
 
 #git commit -m "Updating Versioning For Packages" 2>&1 >/dev/null || echo "No changes to commit"
 
@@ -85,7 +83,7 @@ jobs:
     # wait for versioning to complete successfully
     needs: versioning
     # This will only run if changeset files have been pushed
-    if: needs.versioning.outputs.changes == 'false'
+    if: needs.versioning.outputs.committed == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
