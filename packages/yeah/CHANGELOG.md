@@ -1,5 +1,11 @@
 # @alfergus0n/yeah
 
+## 2.0.1
+
+### Patch Changes
+
+- 0ca636a: whoooaahh
+
 ## 2.0.0
 
 ### Major Changes
