@@ -1,5 +1,11 @@
 # @alfergus0n/no
 
+## 1.3.0
+
+### Minor Changes
+
+- 0f7970a: to account for new comments :)
+
 ## 1.2.0
 
 ### Minor Changes
