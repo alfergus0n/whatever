@@ -1,5 +1,11 @@
 # @alfergus0n/no
 
+## 1.4.0
+
+### Minor Changes
+
+- 8864cfe: very big
+
 ## 1.3.0
 
 ### Minor Changes
