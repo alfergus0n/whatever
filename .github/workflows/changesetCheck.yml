@@ -16,20 +16,21 @@ jobs:
           fetch-depth: 0
           token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Check Changeset Directory
+      - name: Changeset Exists Check
         id: changeset_files
         uses: andstor/file-existence-action@v1
         with:
           files: ".changeset/*.md"
+          allow_failure: true
 
-      # exits and fails action if changeset does not exist in PR
-      - name: Does Changeset Exist?
-        if: steps.changeset_files.outputs.files_exists == 'false'
-        run: |
-          echo "Changeset not found, please include commit one"
-          exit 1
+      # # exits and fails action if changeset does not exist in PR
+      # - name: Does Changeset Exist?
+      #   if: steps.changeset_files.outputs.files_exists == 'false'
+      #   run: |
+      #     echo "Changeset not found, please include commit one"
+      #     exit 1
 
-      - name: Changeset Found
-        run: |
-          echo "Changeset Found"
+      # - name: Changeset Found
+      #   run: |
+      #     echo "Changeset Found"
       
