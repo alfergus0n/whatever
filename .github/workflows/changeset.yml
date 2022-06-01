@@ -7,7 +7,7 @@ on:
 
 jobs:
   changeset:
-    name: Changeset Exists
+    name: Changeset Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
           token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Changeset Exists Check
+      - name: Changeset Exists
         id: changeset_files
         uses: andstor/file-existence-action@v1
         with:

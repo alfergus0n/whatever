@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   versioning:
-    name: Build, Test, and Publish
+    name: Build and Version
     runs-on: ubuntu-latest
     outputs:
       # map step output to job output
@@ -45,13 +45,15 @@ jobs:
         if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npm ci
 
+      # run test here  
+
       - name: Version Command
         id: version 
         # sets steps.version.output.changes
         run: |
           echo ::set-output name=changes::$(npx changeset version 2>&1 | grep -q "No unreleased changesets found" && echo "false" || echo "true")
       
-      # Push updated package.json and CHANGESET.md files
+      # Push updated package.json and CHANGESET .md files
       - name: Push Changes
         id: commit
         if: steps.version.outputs.changes == 'true'
@@ -63,9 +65,8 @@ jobs:
           git push
           echo ::set-output name=committed::"true"
 
-#git commit -m "Updating Versioning For Packages" 2>&1 >/dev/null || echo "No changes to commit"
-
   publish:
+    name: Publish
     runs-on: ubuntu-latest
     # wait for versioning to complete successfully
     needs: versioning
@@ -99,8 +100,7 @@ jobs:
         if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npm ci
 
-      # run test here  
-      # might not need this changeset action
+      # todo: run test here  
 
       - name: Release Packages
         run: npm run changeset-publish
