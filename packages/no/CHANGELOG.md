@@ -1,5 +1,11 @@
 # @alfergus0n/no
 
+## 3.0.0
+
+### Major Changes
+
+- bd5bba0: yefsdafa
+
 ## 2.0.0
 
 ### Major Changes
