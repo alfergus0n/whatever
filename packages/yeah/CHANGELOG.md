@@ -1,5 +1,11 @@
 # @alfergus0n/yeah
 
+## 3.0.0
+
+### Major Changes
+
+- a476915: bump and moe version bump
+
 ## 2.0.1
 
 ### Patch Changes

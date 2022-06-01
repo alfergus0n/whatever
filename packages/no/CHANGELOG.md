@@ -1,5 +1,11 @@
 # @alfergus0n/no
 
+## 2.0.0
+
+### Major Changes
+
+- a476915: bump and moe version bump
+
 ## 1.4.0
 
 ### Minor Changes
