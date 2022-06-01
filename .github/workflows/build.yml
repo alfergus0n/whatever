@@ -114,6 +114,9 @@ jobs:
       #   env:
       #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+      - name: Push tags
+        run: git push --follow-tags
+
 
       # - name: Send Slack Notification If Successful
       #   if: steps.changesets.outputs.published == 'true'
