@@ -1,0 +1,36 @@
+name: Changeset File Included 🦋 
+
+on: 
+  pull_request:
+    paths-ignore:
+      - '**/README.md'
+
+jobs:
+  changeset:
+    name: Changeset Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Changeset Exists
+        id: changeset_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: ".changeset/*.md"
+          allow_failure: true
+
+      # # exits and fails action if changeset does not exist in PR
+      # - name: Does Changeset Exist?
+      #   if: steps.changeset_files.outputs.files_exists == 'false'
+      #   run: |
+      #     echo "Changeset not found, please include commit one"
+      #     exit 1
+
+      # - name: Changeset Found
+      #   run: |
+      #     echo "Changeset Found"
+      

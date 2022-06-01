@@ -1,4 +1,4 @@
-name: Manual Trigger Build, Test, and Publish
+name: Manual Build, Test, and Publish 🚀
 
 on: workflow_dispatch
 
@@ -13,9 +13,12 @@ jobs:
     name: Build and Publish
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Repo
         uses: actions/checkout@v3
-
+          # fetch all Git history, Changesets generates changelogs with correct commits
+          fetch-depth: 0
+          token: ${{secrets.GITHUB_TOKEN}}
+          
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -37,13 +40,18 @@ jobs:
         run: npm ci
 
       # todo: run test here  
-
+      
       - name: Release Packages
-        uses: changesets/action@v1
-        with:
-          publish: npm run changeset-publish
+        run: npm run changeset-publish
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # - name: Release Packages
+      #   uses: changesets/action@v1
+      #   with:
+      #     publish: npm run changeset-publish
+      #   env:
+      #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           
-      - name: Push tags
-        run: git push --follow-tags
+      # - name: Push tags
+      #   run: git push --follow-tags
