@@ -103,19 +103,11 @@ jobs:
       # todo: run test here  
 
       - name: Release Packages
-        run: npm run changeset-publish
+        uses: changesets/action@v1
+        with:
+          publish: npm run changeset-publish
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-      # - name: Release Packages
-      #   uses: changesets/action@v1
-      #   with:
-      #     publish: npm run changeset-publish
-      #   env:
-      #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Push tags
-        run: git push --follow-tags
 
 
       # - name: Send Slack Notification If Successful
