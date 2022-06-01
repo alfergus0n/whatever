@@ -85,8 +85,12 @@ jobs:
     # This will only run if changeset files have been pushed
     if: needs.versioning.outputs.committed == 'true'
     steps:
-      - name: Checkout
+
+      - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: git checkout HEAD^
 
       - name: Setup Node
         uses: actions/setup-node@v3
