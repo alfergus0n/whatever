@@ -1,5 +1,11 @@
 # @alfergus0n/yeah
 
+## 2.0.0
+
+### Major Changes
+
+- d51abe4: very important changes!
+
 ## 1.2.0
 
 ### Minor Changes
