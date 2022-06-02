@@ -3,8 +3,7 @@ const sayHello = function (name) {
 }
 
 // some other comment, cool
-
-
+//
 module.exports = {
     sayHello
 }
